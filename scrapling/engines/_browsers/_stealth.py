@@ -271,10 +271,9 @@ class StealthySession(SyncSession, StealthySessionMixin):
                     if not first_response:
                         raise RuntimeError(f"Failed to get response for {url}")
 
-                    if params.solve_cloudflare:
-                        self._cloudflare_solver(page)
-                        # Make sure the page is fully loaded after the captcha
-                        self._wait_for_page_stability(page, params.load_dom, params.network_idle)
+
+                    # Make sure the page is fully loaded after the captcha, if exists
+                    self._wait_for_page_stability(page, params.load_dom, params.network_idle)
 
                     if params.page_action:
                         try:
@@ -572,10 +571,9 @@ class AsyncStealthySession(AsyncSession, StealthySessionMixin):
                     if not first_response:
                         raise RuntimeError(f"Failed to get response for {url}")
 
-                    if params.solve_cloudflare:
-                        await self._cloudflare_solver(page)
-                        # Make sure the page is fully loaded after the captcha
-                        await self._wait_for_page_stability(page, params.load_dom, params.network_idle)
+
+                    # Make sure the page is fully loaded after the captcha, if exists
+                    await self._wait_for_page_stability(page, params.load_dom, params.network_idle)
 
                     if params.page_action:
                         try:
